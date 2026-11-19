@@ -1,0 +1,6 @@
+- id: check-private
+  name: check private details
+  description: Refuse a commit whose files or message name a term from the repo's gitignored terms files.
+  entry: check-private
+  language: python
+  stages: [pre-commit, commit-msg]
