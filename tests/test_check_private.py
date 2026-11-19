@@ -35,7 +35,8 @@ def test_terms_come_from_each_file_with_labels_and_comments(tmp_path):
 
 def test_main_checkout_of_a_linked_worktree_is_the_main_one(tmp_path):
     main = git_repo(tmp_path / "main")
-    subprocess.run(["git", "-C", str(main), "commit", "-q", "--allow-empty", "-m", "init"], check=True)
+    identity = ["-c", "user.name=test", "-c", "user.email=test@example.com"]
+    subprocess.run(["git", "-C", str(main), *identity, "commit", "-q", "--allow-empty", "-m", "init"], check=True)
     subprocess.run(["git", "-C", str(main), "worktree", "add", "-q", str(tmp_path / "linked")], check=True)
     assert check_private.main_checkout(tmp_path / "linked").resolve() == main.resolve()
     assert check_private.main_checkout(main).resolve() == main.resolve()
